@@ -222,6 +222,9 @@
       -webkit-text-fill-color: var(--text);
       background: none;
       letter-spacing: 0;
+      position: absolute;
+      left: 100%;
+      top: 0;
     }
 
     .deliver-line {
@@ -297,8 +300,8 @@
     .hero-stats {
       display: flex;
       gap: 3rem;
-      margin-top: 4rem;
-      padding-top: 2rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
       border-top: 1px solid var(--border);
       flex-wrap: wrap;
     }
@@ -477,6 +480,168 @@
     }
 
     .timeline-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    /* ── RECOMMENDATIONS ── */
+    .testimonial-carousel {
+      position: relative;
+    }
+
+    .carousel-viewport {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      transition: min-height 0.4s ease;
+    }
+
+    .testimonial-card {
+      position: absolute;
+      width: min(720px, calc(100% - 120px));
+      left: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem 3rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%);
+    }
+
+    .testimonial-card.tc-active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 2;
+      border-color: rgba(124,109,250,0.4);
+    }
+
+    @keyframes tc-from-right {
+      from { transform: translateX(calc(-50% + 100vw)); opacity: 0; }
+      to   { transform: translateX(-50%); opacity: 1; }
+    }
+    @keyframes tc-from-left {
+      from { transform: translateX(calc(-50% - 100vw)); opacity: 0; }
+      to   { transform: translateX(-50%); opacity: 1; }
+    }
+    @keyframes tc-to-left {
+      from { transform: translateX(-50%); opacity: 1; }
+      to   { transform: translateX(calc(-50% - 100vw)); opacity: 0; }
+    }
+    @keyframes tc-to-right {
+      from { transform: translateX(-50%); opacity: 1; }
+      to   { transform: translateX(calc(-50% + 100vw)); opacity: 0; }
+    }
+
+    .testimonial-card.tc-from-right { animation: tc-from-right 0.5s ease forwards; }
+    .testimonial-card.tc-from-left  { animation: tc-from-left  0.5s ease forwards; }
+    .testimonial-card.tc-to-left    { animation: tc-to-left    0.5s ease forwards; }
+    .testimonial-card.tc-to-right   { animation: tc-to-right   0.5s ease forwards; }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      z-index: 3;
+    }
+
+    .carousel-prev { left: 0; }
+    .carousel-next { right: 0; }
+
+    .carousel-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(124,109,250,0.1);
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    .testimonial-quote {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 4rem;
+      line-height: 1;
+      background: linear-gradient(120deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0;
+      display: block;
+    }
+
+    .testimonial-text {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+    }
+
+    .testimonial-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(120deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .testimonial-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .testimonial-title {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border);
+      transition: background 0.2s, width 0.2s;
+      cursor: pointer;
+    }
+
+    .carousel-dot.active {
+      background: var(--accent);
+      width: 20px;
+    }
 
     /* ── PROJECTS ── */
     #projects .projects-grid {
@@ -1053,11 +1218,12 @@
 
 <!-- NAV -->
 <nav>
-  <span class="nav-logo">Gorman</span>
+  <span class="nav-logo">James Gorman</span>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#recommendations">References</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#certifications">Certifications</a></li>
     <li><a href="#bookshelf">Reading</a></li>
@@ -1068,7 +1234,7 @@
 <!-- HERO -->
 <section id="hero">
   <h1>
-    Hi, I'm <span class="gradient">James Go<span style="letter-spacing:0.01em">r</span>man</span>.<br />
+    Hello,<br />I'm <span class="gradient">James Go<span style="letter-spacing:0.01em">r</span>man</span>.<br />
     <span class="deliver-line">I deliver <span class="rotating-words" id="rotating-words">
       <span class="active">business value</span>
       <span>technology experiences</span>
@@ -1140,7 +1306,16 @@
         </div>
         <div>
           <div class="info-label">Location</div>
-          <div class="info-value">Cleveland, OH — Open to relocation</div>
+          <div class="info-value">Cleveland, Ohio</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div>
+          <div class="info-label">Current company</div>
+          <div class="info-value">Sherwin-Williams (DJIA - SHW)</div>
         </div>
       </div>
       <div class="info-card">
@@ -1159,15 +1334,6 @@
         <div>
           <div class="info-label">Education</div>
           <div class="info-value">MBA · BBA (MIS)</div>
-        </div>
-      </div>
-      <div class="info-card">
-        <div class="info-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <div>
-          <div class="info-label">Email</div>
-          <div class="info-value">jmgorman00@gmail.com</div>
         </div>
       </div>
     </div>
@@ -1313,6 +1479,131 @@
         <span class="tag">Code Review</span>
       </div>
     </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RECOMMENDATIONS -->
+<section id="recommendations">
+  <p class="section-label">Recommendations</p>
+  <h2 class="section-title">What colleagues say</h2>
+  <div class="testimonial-carousel">
+    <button class="carousel-btn carousel-prev" aria-label="Previous recommendation">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="carousel-viewport">
+
+      <div class="testimonial-card">
+        <span class="testimonial-quote">&#x201C;</span>
+        <p class="testimonial-text">I had the privilege of working under Jim's leadership during my time at Sherwin-Williams, and I can confidently say he is one of the most inspiring leaders I've ever worked with. Jim wasn't just a manager; he was a mentor and a friend. His unwavering dedication to personal development and self-learning had a profound impact on my professional growth. Jim constantly encouraged me to be the best version of myself. He provided guidance that helped me make better decisions, and he held me accountable in the most constructive way, especially when it came to earning my AEM certification — a milestone I couldn't have achieved without his support. What truly sets Jim apart is his ability to lift spirits and motivate his team, even during challenging times. His leadership philosophy was simple yet powerful: great managers make all the difference, no matter the job. If you ever get the chance to work with Jim, seize it. Leaders like him are rare, and I'm grateful for the lasting impact he's had on my career and personal development.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">KD</div>
+          <div>
+            <div class="testimonial-name">Khaled Dagestany</div>
+            <div class="testimonial-title">Sr. Technical Product Manager · Sherwin-Williams</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="testimonial-quote">&#x201C;</span>
+        <p class="testimonial-text">Jim Gorman is a remarkable leader who stands out in multiple personal and professional dimensions. His accomplishments are built on a true dedication to principles, to personal integrity, and to the deep study of what makes people and organizations tick. Jim applied that deep understanding in years of impactful leadership within our department. He built a very high-performing, cross-functional team that successfully launched numerous projects. His commitment and expertise were critical to his team's success. Jim also drove our department to a higher level — he initiated and championed multiple new department-wide practices that became meaningfully more robust, focused, and efficient as a result. On many occasions he was happy to share his perspective and insights with me in wide-ranging conversations. I always came away wiser and more energized. Any team is lucky to have Jim pulling for them, and I can't wait to see what he achieves in the years to come!</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">PW</div>
+          <div>
+            <div class="testimonial-name">Preston Williams</div>
+            <div class="testimonial-title">Digital Product Leader &amp; Patent Inventor</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="testimonial-quote">&#x201C;</span>
+        <p class="testimonial-text">I am fortunate to have had Jim Gorman as my direct manager. From the day I joined his team, he set clear expectations of continuous learning and development as a path to delivering quality business value to our stakeholders. He is a trusted advisor and strategic partner to the team, the department, and the company. Jim's qualities of vision, focus, determination, depth of knowledge, and humor combine for effective leadership, and he is unafraid to share these qualities with anyone that knocks on his door. Jim is one of few managers I've encountered in my career that energizes and inspires his team by sharing his sources of energy and inspiration while encouraging all to join him on the journey. He seeks opportunities for his team, provides the resources to realize those opportunities, and then works to identify and remove obstacles. Jim strives to keep things simple in approach and style of management, even as the details of the business demand complexity. Working with him was a beneficial and gratifying experience.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">MC</div>
+          <div>
+            <div class="testimonial-name">Matt Coleman</div>
+            <div class="testimonial-title">IT Management Professional · Sherwin-Williams</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="testimonial-quote">&#x201C;</span>
+        <p class="testimonial-text">I had the privilege to have Jim as my manager for the last 3+ years. If you are fortunate enough to have Jim as your manager, here are some things you can look forward to: Commitment to excellence — Jim pushes his team to be better, because he pushes himself to be better. He wants you to be the best version of yourself. Empowers his team — Jim gives his team the resources, support, and autonomy they need to take ownership of their work and make meaningful contributions. Authentic as it gets — Jim has your best interest at heart and will tell it to you like it is, while welcoming honest feedback in return. Learning opportunities — Jim has a proven track record of creating a workplace culture that encourages ongoing education and skill development. Positive workplace culture — Jim works hard to cultivate a supportive work environment where you will be respected and your perspective will be valued.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">CG</div>
+          <div>
+            <div class="testimonial-name">Chris Gavris</div>
+            <div class="testimonial-title">IT Delivery Professional · Sherwin-Williams</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="testimonial-quote">&#x201C;</span>
+        <p class="testimonial-text">Jim has a true passion for his team members. He is dedicated to ensuring those that he interacts with are supported and made aware of their potential. Jim is always willing to roll up his sleeves and do the work as well, which is a true mark of a good leader — he will never ask anyone on his team to do something he is not willing to execute himself. Jim has high expectations, but with those expectations comes the support, leadership, and trust of someone who only wants those around him to succeed. He constantly looks to elevate those around him. I have enjoyed working with Jim, reaching out to him for advice, and have benefited from opportunities he has given to me. He is a truly dedicated leader in every sense. His work is detailed, thorough, and of the highest quality.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">DM</div>
+          <div>
+            <div class="testimonial-name">Danika Migliore</div>
+            <div class="testimonial-title">IT Digital Delivery Manager · Sherwin-Williams</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="testimonial-quote">&#x201C;</span>
+        <p class="testimonial-text">Jim is a strong leader that balances drive, continuous improvement, process standardization, and caring for his team — all in a very disciplined manner. He is passionate about learning and driving that educational evolution with his team. He will proactively engage to understand technologies, methodologies, and ways of working to ensure his team is positioned best. The decision to work with and for Jim has paid professional dividends that I am very grateful for.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">DL</div>
+          <div>
+            <div class="testimonial-name">Diane Lewis</div>
+            <div class="testimonial-title">IT Digital Delivery Associate Manager · Sherwin-Williams</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="testimonial-quote">&#x201C;</span>
+        <p class="testimonial-text">Jim is a true leader with expertise in managing IT Programs and Portfolios. His forte is managing diverse teams, key stakeholders, identifying, managing, and delivering business value to projects. I have had the immense pleasure to work with him at Sherwin-Williams where he was a pioneer in establishing processes for business and IT alike, where none existed. He owns the critical issues that might arise in course of executing any project, chalks out the remediation plan with the team, and delivers the product. Additionally, his strong suit is empowering the team for constant professional growth and motivating them towards excellence. His willingness to help in any situation makes him unique. He is one of the best astute managers I have reported to, and he is an asset — in true sense — for any team and organization.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SG</div>
+          <div>
+            <div class="testimonial-name">Shay Gedam</div>
+            <div class="testimonial-title">Project Manager / Sr. Business Analyst · Sherwin-Williams</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="testimonial-quote">&#x201C;</span>
+        <p class="testimonial-text">I reported to Jim during my time at Sherwin-Williams as an IT Project Manager. While deciding to pursue an opportunity in a different area of project management, I knew that I was giving up a great mentor/mentee relationship with Jim. He holds his reports to a high standard, and himself to an even higher one — a perfect representation of leading by example. Jim makes every effort to extract the highest quality effort from his team, while positively influencing others to elevate their contributions as well. More than anything, I was encouraged to always look beyond the current task at hand, and to set my sights on higher-level strategy, process, and personal improvement. It's certainly made me realize that I have even greater potential than I previously envisioned, and this will accompany me into my future career ambitions.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">DS</div>
+          <div>
+            <div class="testimonial-name">Devin Sanderson, PMP</div>
+            <div class="testimonial-title">PMO &amp; Onboarding Leader · Sherwin-Williams</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <button class="carousel-btn carousel-next" aria-label="Next recommendation">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+  <div class="carousel-dots">
+    <div class="carousel-dot active"></div>
+    <div class="carousel-dot"></div>
+    <div class="carousel-dot"></div>
+    <div class="carousel-dot"></div>
+    <div class="carousel-dot"></div>
+    <div class="carousel-dot"></div>
+    <div class="carousel-dot"></div>
+    <div class="carousel-dot"></div>
   </div>
 </section>
 
@@ -1914,6 +2205,53 @@
         setTimeout(() => words[current].classList.add('underline-drawn'), 1000);
       }
     }, 5000);
+  })();
+
+  // Recommendations carousel
+  (function () {
+    const cards   = Array.from(document.querySelectorAll('#recommendations .testimonial-card'));
+    const dots    = Array.from(document.querySelectorAll('#recommendations .carousel-dot'));
+    const prevBtn = document.querySelector('#recommendations .carousel-prev');
+    const nextBtn = document.querySelector('#recommendations .carousel-next');
+    const viewport = document.querySelector('#recommendations .carousel-viewport');
+    if (!cards.length) return;
+
+    const n = cards.length;
+    let current = 0;
+    const DURATION = 500;
+    const ANIM = ['tc-from-right', 'tc-from-left', 'tc-to-left', 'tc-to-right'];
+
+    function syncHeight() {
+      viewport.style.minHeight = (cards[current].offsetHeight + 4) + 'px';
+    }
+
+    function navigate(newIndex, direction) {
+      const oldIndex = current;
+      current = newIndex;
+
+      cards.forEach(c => c.classList.remove('tc-active', ...ANIM));
+      dots.forEach((d, i) => d.classList.toggle('active', i === current));
+
+      cards[oldIndex].classList.add(direction > 0 ? 'tc-to-left' : 'tc-to-right');
+      cards[current].classList.add('tc-active', direction > 0 ? 'tc-from-right' : 'tc-from-left');
+
+      syncHeight();
+
+      setTimeout(() => {
+        cards[oldIndex].classList.remove('tc-to-left', 'tc-to-right');
+        cards[current].classList.remove('tc-from-right', 'tc-from-left');
+      }, DURATION);
+    }
+
+    prevBtn.addEventListener('click', () => navigate((current - 1 + n) % n, -1));
+    nextBtn.addEventListener('click', () => navigate((current + 1) % n, 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => {
+      if (i !== current) navigate(i, i > current ? 1 : -1);
+    }));
+
+    // Initial state — no animation
+    cards[0].classList.add('tc-active');
+    syncHeight();
   })();
 
   // Always start at top on load
